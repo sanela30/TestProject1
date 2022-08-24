@@ -33,28 +33,32 @@ namespace TestProject1
 
             driver.FindElement(By.Id("username")).SendKeys(" rahulshettyacademy");
             driver.FindElement(By.Name("password")).SendKeys(" 123456");
+
+            IWebElement dropDown = driver.FindElement(By.CssSelector("select.form-control"));
+            SelectElement s = new SelectElement(dropDown);
+            s.SelectByText("Teacher");
+
             driver.FindElement(By.XPath("//div[@class='form-group'][5]/label/span[1]/input[@id='terms']")).Click();
             Thread.Sleep(3000);
             driver.FindElement(By.CssSelector("input[value='Sign In']")).Click();
             //driver.FindElement(By.XPath("//input[@value='Sign In']")).Click();
-
-
             //Thread.Sleep(3000);
 
+            //explicit wait helper
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.TextToBePresentInElementValue(driver.FindElement(By.Id("signInBtn")),"Sign In"));
 
             String errorMessage=driver.FindElement(By.ClassName("alert-danger")).Text;
             TestContext.Progress.WriteLine(errorMessage);
 
-
-           IWebElement link= driver.FindElement(By.LinkText("Free Access to InterviewQues/ResumeAssistance/Material"));
-           String hrefAttr=link.GetAttribute("href");
-           String expectedUrl="https://rahulshettyacademy.com/documents-request";
+            //validate url
+            IWebElement link= driver.FindElement(By.LinkText("Free Access to InterviewQues/ResumeAssistance/Material"));
+            String hrefAttr=link.GetAttribute("href");
+            String expectedUrl="https://rahulshettyacademy.com/documents-request";
 
             Assert.AreEqual(expectedUrl, hrefAttr);
 
-          
+           
 
             driver.Close();
         }
