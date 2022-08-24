@@ -4,6 +4,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using WebDriverManager.DriverConfigs.Impl;
 
@@ -33,6 +34,22 @@ namespace TestProject1
 
             driver.FindElement(By.Id("username")).SendKeys(" rahulshettyacademy");
             driver.FindElement(By.Name("password")).SendKeys(" 123456");
+           //driver.FindElement(By.XPath("//label[@class='customradio'][2]/span[@class='checkmark']")).Click();
+
+          
+            IList<IWebElement> radioButons = driver.FindElements(By.XPath("//label/input[@type='radio']"));
+
+
+            foreach (IWebElement radioButon in radioButons)
+            {
+                if (radioButon.GetAttribute("value").Equals("user"))
+                  {
+                    radioButon.Click();
+                  }
+            }
+            Thread.Sleep(3000);
+            driver.FindElement(By.Id("okayBtn")).Click();
+
 
             IWebElement dropDown = driver.FindElement(By.CssSelector("select.form-control"));
             SelectElement s = new SelectElement(dropDown);
@@ -62,9 +79,14 @@ namespace TestProject1
 
             driver.Close();
         }
+        /*
+        [Test]
 
+        public void test2()
+    
+            { }
 
-
+        */
 
         [TearDown]
 
